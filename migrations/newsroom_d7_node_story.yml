@@ -1,0 +1,84 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - middlebury_newsroom_migration
+id: migrate_map_newsroom_d7_node_story
+migration_tags:
+  - 'Drupal 7'
+migration_group: newsroom_migrate
+label: 'Nodes (Story)'
+source:
+  plugin: middlebury_newsroom_nodes
+  node_type: news
+process:
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: und
+  title: title
+  uid: node_uid
+  status: status
+  created: created
+  changed: changed
+  promote: promote
+  sticky: sticky
+  revision_uid: revision_uid
+  revision_log: log
+  revision_timestamp: timestamp
+  field_featured_image:
+    plugin: middlebury_story_featured_image
+  field_paragraphs:
+    plugin: html_to_paragraphs
+    source: 'body/0/value'
+    parser:
+      -
+        plugin: middlebury_html_parser_mm_media
+      -
+        plugin: middlebury_html_parser_video
+      -
+        plugin: middlebury_html_parser_videolink
+      -
+        plugin: middlebury_html_parser_img
+    process:
+      -
+        plugin: middlebury_html_process_mm_media
+      -
+        plugin: middlebury_html_process_video
+      -
+        plugin: middlebury_html_process_img
+        source_base_path: 'http://www.middlebury.edu'
+        source_base_url:
+          - 'http://saw.middlebury.edu/~imcbride/midd'
+          - 'http://www.middlebury.edu'
+        target_folder: 'public://'
+      -
+        plugin: middlebury_html_process_text
+        bundle: text
+        field_name: field_body
+        text_format: simple_html
+        fallback: true
+  field_blurb:
+    plugin: sub_process
+    source: field_teaser
+    process:
+      value: value
+      format:
+        plugin: default_value
+        default_value: blurb_html
+  field_media_contact/value:
+    -
+      plugin: single_value
+      source: field_links
+    -
+      plugin: middlebury_link_process_text
+  field_media_contact/format:
+    plugin: default_value
+    default_value: blurb_html
+destination:
+  plugin: 'entity:node'
+  default_bundle: story
+migration_dependencies:
+  optional:
+    - newsroom_d7_user

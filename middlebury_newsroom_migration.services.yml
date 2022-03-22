@@ -1,0 +1,9 @@
+services:
+  middlebury_newsroom_migration.node_rewrites:
+    class: Drupal\middlebury_newsroom_migration\Command\NodeRewrites
+    arguments: ['@database', '@http_client', '@path_alias.manager']
+    tags:
+      - { name: drupal.command }
+  middlebury_newsroom_migration.media_creator:
+    class: Drupal\middlebury_newsroom_migration\MediaCreator
+    arguments: ['@http_client', '@entity_type.manager', '@file_system']

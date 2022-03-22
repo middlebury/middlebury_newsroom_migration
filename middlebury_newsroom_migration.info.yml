@@ -1,0 +1,12 @@
+type: module
+name: Middlebury Newsroom Migration
+description: 'Migrates story types from www.middlebury.edu (Drupal 7) to the new Offices site (Drupal 9).'
+package: middlebury
+core_version_requirement: ^9
+dependencies:
+  - drupal:migrate
+  - drupal:migrate_drupal
+  - middlebury_migration_utility:middlebury_migration_utility
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+  - migrate_html_to_paragraphs:migrate_html_to_paragraphs

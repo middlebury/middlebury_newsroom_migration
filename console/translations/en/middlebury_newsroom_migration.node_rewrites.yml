@@ -1,0 +1,12 @@
+description: 'Generate a list of rewrite rules for the node-migration.'
+options: {}
+arguments:
+  dest_base: 'Destintion base URL'
+  sleep: 'Sleep between URL checks'
+messages:
+  success: 'Done.'
+errors:
+  no_migrated_stories: 'No migrated stories were found in the `migrate_map_newsroom_d7_node_story` table.'
+  no_redirect: 'Got status %s instead of a redirect for %s'
+  invalid_dest_base: 'Supplied URL was invalid.'
+  invalid_sleep: 'Supplied sleep was not a valid float.'
